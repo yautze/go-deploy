@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"go-deploy/app/config"
+	"go-deploy/cmd"
 )
 
 //
@@ -12,10 +13,9 @@ var (
 )
 
 func main() {
-	//config.Version = VERSION
-	//config.Commit = COMMIT
-	//config.Build = BUILD
+	config.Version = VERSION
+	config.Commit = COMMIT
+	config.Build = BUILD
 
-	//cmd.Execute()
-	fmt.Println("HELLO")
+	cmd.Execute()
 }

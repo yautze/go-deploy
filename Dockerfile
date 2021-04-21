@@ -1,47 +1,19 @@
 # Build Stage 
 
-# 設定golang docker環境 golang:tag
-#FROM golang:alpine AS build-env
+# Final Stage 
+FROM golang:latest as binder
+LABEL stage=builder
 
-## 設定帶入參數
-##ARG VERSION
-##ARG COMMIT
-##ARG Build
+COPY . /api
+WORKDIR /api
+# Input the origin package path
+RUN go build -o api
 
-#ADD . /src
+# 
+FROM alpine:latest 
+COPY --from=binder /api/api /api
 
-## Build go exe
-#RUN cd /src && go build -o app
-
-## Final Stage 
-
-## 設定deploy環境
-#FROM alpine:latest
-
-## 取得build好的golang環境
-#COPY --from=build-env /src/app /app/
-
-## 建立執行資料夾
-#WORKDIR /app
-
-## golang exe 
-#ENTRYPOINT ["./app"]
-
-## version cmd
-#CMD ["version"]
-
-
-# build stage
-FROM golang:alpine AS build-env
-
-COPY . /work
-WORKDIR /work
-
-RUN go build -o app
-
-# final stage
-FROM alpine:latest
-COPY --from=build-env /work/app /app
 WORKDIR /
-ENTRYPOINT ["./app"]
-CMD ["version"]
+ENTRYPOINT ["./api"]
+CMD  ["version"]
+
