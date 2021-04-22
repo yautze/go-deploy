@@ -9,8 +9,8 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "go-deploy",
-	Short: "go-deploy root",
+	Use:   "webkit",
+	Short: "A brief description of your application",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

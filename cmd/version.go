@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"go-deploy/app/config"
+	"go-deploy/config"
 
 	"github.com/spf13/cobra"
 )
@@ -18,7 +18,6 @@ var versionCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(versionCmd)
-
 }
 
 func version() {

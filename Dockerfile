@@ -1,19 +1,18 @@
 # Build Stage 
-
 # Final Stage 
-FROM golang:latest as binder
-LABEL stage=builder
 
-COPY . /api
-WORKDIR /api
-# Input the origin package path
-RUN go build -o api
+FROM golang:latest AS build
 
-# 
-FROM alpine:latest 
-COPY --from=binder /api/api /api
+COPY . /app
+WORKDIR /app
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app 
+
+
+FROM alpine:latest  
+COPY --from=build /app/app /app
 
 WORKDIR /
-ENTRYPOINT ["./api"]
-CMD  ["version"]
+ENTRYPOINT ["./app"]
+CMD ["version"]
 
